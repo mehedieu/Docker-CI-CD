@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: &service-name docker
+  labels: &labels
+    app: *service-name
+spec:
+  minReadySeconds: 1
+  selector:
+    matchLabels: *labels
+  replicas: 1
+  revisionHistoryLimit: 10
+  template: 
+    metadata:
+      labels: *labels
+    spec:
+      containers:
+      - name: *service-name
+        image: hassan116979/docker:v1
+        command: ["/docker-tutorial"]
+       # command: ["sh","./binary"]
+      imagePullSecrets:
+       - name: registry-secret 
